@@ -8,6 +8,8 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.chucknorrisapp.pogo.Joke;
 import com.example.chucknorrisapp.pogo.Value;
 import retrofit2.Call;
@@ -19,12 +21,12 @@ import java.util.List;
 
 
 public class JokesFragment extends Fragment implements View.OnClickListener {
+    MyRecyclerViewAdapter adapter;
     public static final String JOKES_ARRAY_KEY = "1";
     private int numberOfJokes;
     EditText editText;
-    ListView listView;
+    RecyclerView recyclerView;
     ArrayList<String> jokesArray;
-    View view;
     public static JokesFragment mInstance;
 
 
@@ -47,7 +49,7 @@ public class JokesFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_jokes, container, false);
         Button reloadButton = layout.findViewById(R.id.reloadButton);
-        listView = layout.findViewById(R.id.listView);
+        recyclerView = layout.findViewById(R.id.recyclerView);
         reloadButton.setOnClickListener(this);
         editText = layout.findViewById(R.id.editTextNumber);
         return layout;
@@ -105,10 +107,9 @@ public class JokesFragment extends Fragment implements View.OnClickListener {
 
     //set data to listview using the adapter
     private void fillListWithJokes() {
-        view = getView();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(),
-                android.R.layout.simple_list_item_1, jokesArray);
-        listView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new MyRecyclerViewAdapter(getActivity(), jokesArray);
+        recyclerView.setAdapter(adapter);
     }
 
 }
