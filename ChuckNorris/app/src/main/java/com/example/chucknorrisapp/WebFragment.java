@@ -18,6 +18,15 @@ public class WebFragment extends Fragment implements IOnBackPressed {
     public static final String LINK_API = "https://www.icndb.com/api/";
     private WebView webView;
     private Bundle webViewBundle;
+    public static WebFragment mInstance;
+
+
+    public static WebFragment getInstance() {
+        if (mInstance == null) {
+            mInstance = new WebFragment();
+        }
+        return mInstance;
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

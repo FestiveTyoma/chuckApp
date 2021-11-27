@@ -3,4 +3,6 @@
     <string name="count">Count</string>
     <string name="reloadButtonText">Reload</string>
     <string name="hint">Enter a number of jokes</string>
+    <string name="joke_text">Jokes</string>
+    <string name="web_text">Web</string>
 </resources>

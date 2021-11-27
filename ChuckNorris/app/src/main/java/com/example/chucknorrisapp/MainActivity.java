@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
-import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -14,15 +14,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SectionsPagerAdapter pagerAdapter;
-        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = findViewById(R.id.pager);
-        pager.setAdapter(pagerAdapter);
-        //binding ViewPager with TabLayout
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(pager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.joke_icon);
-        tabLayout.getTabAt(1).setIcon(R.drawable.web_icon);
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
+        loadFragment(JokesFragment.getInstance());
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.page_joke:
+                    loadFragment(JokesFragment.getInstance());
+                    return true;
+                case R.id.page_web:
+                    loadFragment(WebFragment.getInstance());
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fl_content, fragment);
+        ft.commit();
     }
 
     @Override

@@ -25,6 +25,15 @@ public class JokesFragment extends Fragment implements View.OnClickListener {
     ListView listView;
     ArrayList<String> jokesArray;
     View view;
+    public static JokesFragment mInstance;
+
+
+    public static JokesFragment getInstance() {
+        if (mInstance == null) {
+            mInstance = new JokesFragment();
+        }
+        return mInstance;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
